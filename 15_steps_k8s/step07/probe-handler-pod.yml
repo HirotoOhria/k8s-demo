@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapi
+spec:
+  containers:
+  - name: webapi
+    image: my/webapi
+    livenessProbe: # 活性プローブ（コンテナのアプリケーションが実行中かを探査）
+      httpGet:
+        path: /halthcheck
+        port: 3000
+      initialDelaySeconds: 3
+      periodSeconds: 5
+    readinessProbe: # 準備状態性プローブ（コンテナのアプリケーションがリクエストを受け取れるかを探査）
+      httpGet:
+        path: /ready
+        port: 3000
+      initialDelaySeconds: 15
+      periodSeconds: 5
